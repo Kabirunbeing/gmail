@@ -36,28 +36,7 @@ export default function HeroTrustedCustomers() {
           We’ve been <strong className="text-white">securely sourcing and managing Gmail accounts</strong> for more than <span className="text-cyan-400 font-bold">two years</span>, providing reliable, private solutions for professionals who value discretion and consistency.
         </p>
 
-        {/* Trusted By Clients (Generic & Professional) */}
-        <div className="mt-8">
-          <p className="text-gray-400 text-sm uppercase tracking-wider mb-6">Serving clients worldwide</p>
 
-          <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10">
-            <span className="text-gray-500 hover:text-cyan-400 transition-all duration-300 transform hover:scale-105 opacity-70 hover:opacity-100">
-              Global Reach LLC
-            </span>
-            <span className="text-gray-500 hover:text-cyan-400 transition-all duration-300 transform hover:scale-105 opacity-70 hover:opacity-100">
-              Apex Solutions
-            </span>
-            <span className="text-gray-500 hover:text-cyan-400 transition-all duration-300 transform hover:scale-105 opacity-70 hover:opacity-100">
-              Horizon Group
-            </span>
-            <span className="text-gray-500 hover:text-cyan-400 transition-all duration-300 transform hover:scale-105 opacity-70 hover:opacity-100">
-              Vertex Advisors
-            </span>
-            <span className="text-gray-500 hover:text-cyan-400 transition-all duration-300 transform hover:scale-105 opacity-70 hover:opacity-100">
-              Summit Office
-            </span>
-          </div>
-        </div>
       </div>
 
       {/* Fade-in Animation */}
