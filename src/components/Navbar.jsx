@@ -1,7 +1,24 @@
-import { useState } from 'react';
+// src/components/Navbar.jsx
+import { SignedIn, SignedOut, UserButton, SignOutButton, useUser } from '@clerk/clerk-react';
+import { useState, useEffect } from 'react';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user } = useUser();
+  const [visitCount, setVisitCount] = useState(0);
+
+  // Increment visit count on every page load (for signed-in users)
+  useEffect(() => {
+    if (user) {
+      const key = `visitCount_${user.id}`;
+      const stored = localStorage.getItem(key);
+      const newCount = stored ? parseInt(stored, 10) + 1 : 1;
+
+      // Always increase count on refresh/page load
+      localStorage.setItem(key, newCount.toString());
+      setVisitCount(newCount);
+    }
+  }, [user]);
 
   return (
     <nav
@@ -59,27 +76,85 @@ export default function Navbar() {
           </span>
         </div>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-8">
-          <a href="#features" className="text-gray-300 hover:text-cyan-400 font-medium transition-all duration-200 transform hover:scale-105 text-sm">
-            Features
-          </a>
-          <a href="#pricing" className="text-gray-300 hover:text-cyan-400 font-medium transition-all duration-200 transform hover:scale-105 text-sm">
-            Pricing
-          </a>
-          <a href="#contact" className="text-gray-300 hover:text-cyan-400 font-medium transition-all duration-200 transform hover:scale-105 text-sm">
-            Contact
-          </a>
-          <a
-            href="mailto:support@gmaildeck.ai"
-            className="bg-gradient-to-r from-cyan-400 to-blue-600 text-black font-semibold py-2 px-5 rounded-full shadow-lg hover:shadow-cyan-500/25 transform hover:scale-105 transition-all duration-300 text-sm no-underline"
-          >
-            Mail Us
-          </a>
+        {/* Desktop Auth Controls */}
+        <div className="hidden md:flex items-center space-x-6">
+          <SignedIn>
+            {/* Single Star with Tooltip */}
+            <div
+              className="relative"
+              title={`You have visited this site ${visitCount} time${visitCount !== 1 ? 's' : ''}`}
+            >
+              <div
+                className="flex items-center space-x-1 px-3 py-1.5 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full text-white font-semibold text-sm shadow-lg cursor-default"
+                style={{
+                  backdropFilter: 'blur(4px)',
+                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                }}
+              >
+                <svg
+                  className="w-5 h-5 text-white drop-shadow"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+                <span>{visitCount}</span>
+              </div>
+            </div>
+
+            <UserButton
+              appearance={{
+                elements: {
+                  userButtonTrigger: 'flex items-center space-x-2 bg-black/50 border border-cyan-500/30 rounded-full px-3 py-1.5 hover:bg-black/70 transition-all duration-200',
+                },
+              }}
+            />
+
+            {/* Sign Out Button */}
+            <SignOutButton>
+              <button
+                className="group relative flex items-center space-x-2 px-4 py-2 text-sm font-semibold text-white overflow-hidden rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-red-500/25"
+                style={{
+                  background: 'linear-gradient(90deg, #990000, #cc0000, #990000)',
+                  backgroundSize: '200% 100%',
+                  border: '1px solid rgba(255, 50, 50, 0.4)',
+                  backdropFilter: 'blur(4px)',
+                }}
+              >
+                <span
+                  className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{
+                    background: 'radial-gradient(circle, rgba(255,0,0,0.2) 0%, rgba(255,0,0,0) 70%)',
+                    zIndex: 0,
+                  }}
+                ></span>
+                <span className="relative z-10 flex items-center space-x-1">
+                  <span>Sign Out</span>
+                  <svg
+                    className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M17 16l4-4m0 0l-4-4m4 4H7m-6 8h6v-2a2 2 0 012-2h10a2 2 0 012 2v2H3z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </SignOutButton>
+          </SignedIn>
+
+          <SignedOut>
+            <span className="text-gray-400 text-sm">Please sign in</span>
+          </SignedOut>
         </div>
 
         {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center">
+        <div className="md:hidden">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="text-gray-300 focus:outline-none"
@@ -106,34 +181,24 @@ export default function Navbar() {
       {isMenuOpen && (
         <div className="md:hidden bg-black/90 backdrop-blur-md border-t border-cyan-500/10">
           <div className="px-6 py-4 flex flex-col space-y-4 text-sm">
-            <a
-              href="#features"
-              className="text-gray-300 hover:text-cyan-400 transition-colors duration-200"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Features
-            </a>
-            <a
-              href="#pricing"
-              className="text-gray-300 hover:text-cyan-400 transition-colors duration-200"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Pricing
-            </a>
-            <a
-              href="#contact"
-              className="text-gray-300 hover:text-cyan-400 transition-colors duration-200"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Contact
-            </a>
-            <a
-              href="mailto:support@gmaildeck.ai"
-              className="bg-gradient-to-r from-cyan-400 to-blue-600 text-black font-semibold py-2 px-5 rounded-full shadow w-fit hover:shadow-cyan-500/25 transform hover:scale-105 transition-all duration-300 no-underline self-start"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Mail Us
-            </a>
+            <SignedIn>
+              <div className="flex items-center justify-between">
+                <UserButton />
+                {/* Mobile Visit Count */}
+                <div className="flex items-center space-x-2 text-sm text-yellow-300">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                  </svg>
+                  <span>You've visited {visitCount} time{visitCount !== 1 ? 's' : ''}</span>
+                </div>
+                <SignOutButton>
+                  <button className="text-red-400 text-sm font-medium">Sign Out</button>
+                </SignOutButton>
+              </div>
+            </SignedIn>
+            <SignedOut>
+              <p className="text-gray-400">Please sign in to continue</p>
+            </SignedOut>
           </div>
         </div>
       )}

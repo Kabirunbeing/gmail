@@ -12,6 +12,7 @@ import Navbar from "./components/Navbar";
 // Import your custom auth pages
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
+import Footer from './components/Footer';
 
 // Load publishable key from .env
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
@@ -26,6 +27,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* Public Auth Routes */}
+          
           <Route path="/sign-in/*" element={<SignInPage />} />
           <Route path="/sign-up/*" element={<SignUpPage />} />
 
@@ -42,6 +44,7 @@ function App() {
                   <HeroEmailScanTool />
                   <ConvertToExcel />
                   <FreshAccountsChatBot />
+                  <Footer/>
                 </SignedIn>
                 <SignedOut>
                   {/* Redirect to sign-in if not authenticated */}

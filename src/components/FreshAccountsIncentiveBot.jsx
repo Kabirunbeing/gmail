@@ -174,14 +174,7 @@ export default function WhatsAppStyleChat() {
         </div>
 
         {/* CTA Button */}
-        <div className="text-center mt-6">
-          <a
-            href="#tools"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-medium rounded-lg hover:from-cyan-500 hover:to-blue-500 transition-all transform hover:scale-105 text-sm shadow-lg"
-          >
-            📥 Format Your Accounts with Excel Tool
-          </a>
-        </div>
+        
 
         <p className="text-center text-gray-500 text-sm mt-4">
           This is how top sellers prepare — clean, verified, ready to go.

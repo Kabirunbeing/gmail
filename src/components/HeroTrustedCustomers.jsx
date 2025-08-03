@@ -1,3 +1,5 @@
+import { FaWhatsapp } from 'react-icons/fa';
+
 export default function HeroTrustedCustomers() {
   return (
     <section
@@ -36,7 +38,17 @@ export default function HeroTrustedCustomers() {
           We’ve been <strong className="text-white">securely sourcing and managing Gmail accounts</strong> for more than <span className="text-cyan-400 font-bold">two years</span>, providing reliable, private solutions for professionals who value discretion and consistency.
         </p>
 
-
+        {/* WhatsApp Button */}
+        <a
+          href="https://wa.me/03186112144?text=Hi%2C%20I%27m%20interested%20in%20selling%20Gmail%20accounts."
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center space-x-3 bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:shadow-green-500/25 transform hover:scale-105 transition-all duration-300"
+          style={{ animation: 'fadeIn 1s ease-out 0.6s forwards', animationDelay: '0.6s' }}
+        >
+          <FaWhatsapp className="w-6 h-6" />
+          <span>Click here to sell Gmail accounts</span>
+        </a>
       </div>
 
       {/* Fade-in Animation */}
